@@ -1,0 +1,197 @@
+
+<script type="text/javascript">
+    RED.nodes.registerType('ui_multiInputDialog', {
+        category: RED._("node-red-dashboard/ui_base:ui_base.label.category"),
+        color: 'rgb(119, 198, 204)',
+        defaults: {
+            position: {value: 'prompt'},
+            displayTime: {value: '10'},
+            highlight: {value: ''},
+            sendall: {value: true},
+            outputs: {value: 1},
+            ok: {value: 'OK', required: true},
+            cancel: {value: 'Cancel'},
+            raw: {value: true},
+            className: {value: ''},
+            topic: {value: ''},
+            name: {value: ''},
+            fields: { value: [] }
+        },
+        inputs:1,
+        outputs:1,
+        align: "right",
+        icon: "ui_toast.png",
+        paletteLabel: 'multiInputDialog',
+        label: function() { return this.name || "show popup"; },
+        labelStyle: function() { return this.name?"node_label_italic":""; },
+        oneditprepare: function() {
+		    console.log("oneditprepare");
+            $("#node-input-position").on("change", function() {
+                $("#node-dialog-displayok").show();
+                $("#node-dialog-displaycancel").show();
+                $("#node-dialog-topic").show();
+                if (typeof $("#node-input-cancel").val() !== "string" || $("#node-input-cancel").val() === "" ) {
+                    $("#node-input-cancel").val("Cancel");
+                }
+            });
+            $('#node-input-fields-container')
+            .css('min-height','250px').css('min-width','432px')
+            .editableList({
+                sortable: true,
+                removable: true,
+                addButton: true,
+                addItem: function(row, index, data) {
+                    $('<div><span>Property</span></div>')
+                    .css('display','inline-block').css('width','55px').appendTo(row);
+                    var field = $('<input/>', {
+                        class: 'node-input-fields-field',
+                        type: 'text',
+                        style: "margin-left:5px; width:82%;"
+                    }).appendTo(row);
+                    if (data.field) {
+                        field.val(data.field);
+                    }
+                    $('<br>').appendTo(row);
+                    $('<div><span>Title</span></div>')
+                    .css('display','inline-block').css('width','55px').appendTo(row);
+                    var title = $('<input/>', {
+                        class: 'node-input-fields-title',
+                        type: 'text',
+                        style: "margin-left:5px; width:82%;"
+                    }).appendTo(row);
+                    if (data.title) {
+                        title.val(data.title.replace(/\&#39;/g, "'"));
+                    }
+                    $('<br>').appendTo(row);
+                    $('<div><span>Align</span></div>')
+                    .css('display','inline-block').css('width','55px').appendTo(row);
+                    var align = $('<select/>', {
+                        class: 'node-input-fields-align',
+                        style: "margin-left:5px; width:25%;"
+                    }).appendTo(row);
+                    align.append($('<option></option>').val('left').text('left'));
+                    align.append($('<option></option>').val('center').text('center'));
+                    align.append($('<option></option>').val('right').text('right'));
+                    if (data.align) {
+                        align.val(data.align);
+                    }
+                    // $('<br>').appendTo(row);
+                    $('<div><span>Width</span></div>')
+                    .css('display','inline-block').css('width','35px').css('padding-left','19%').appendTo(row);
+                    var title = $('<input/>', {
+                        class: 'node-input-fields-width',
+                        type: 'text',
+                        style: "margin-left:5px; width:28%;",
+                        placeholder: "px, %, or blank"
+                    }).appendTo(row);
+                    if (data.width) {
+                        title.val(data.width);
+                    }
+                    $('<br>').appendTo(row);
+                    $('<div><span>Format</span></div>')
+                    .css('display','inline-block').css('width','55px').appendTo(row);
+                    var align = $('<select/>', {
+                        class: 'node-input-fields-formatter',
+                        style: "margin-left:5px; width:50%"
+                    }).appendTo(row);
+                    align.append($('<option></option>').val('plaintext').text('Plain text'));
+                    align.append($('<option></option>').val('html').text('HTML'));
+                    align.append($('<option></option>').val('link').text('Link (http://..)'));
+                    align.append($('<option></option>').val('image').text('Image (src url)'));
+                    align.append($('<option></option>').val('progress').text('Progress (0-100)'));
+                    align.append($('<option></option>').val('traffic').text('Traffic (0-33-67-100)'));
+                    align.append($('<option></option>').val('color').text('Color (html,#rrggbb)'));
+                    align.append($('<option></option>').val('tickCross').text('Tick / Cross (boolean,1/0)'));
+                    align.append($('<option></option>').val('star').text('Stars (0-5)'));
+                    // align.append($('<option></option>').val('datetime').text('Date time'));
+                    align.append($('<option></option>').val('rownum').text('Row number'));
+                    if (data.formatter) {
+                        align.val(data.formatter);
+                    }
+                }
+            });
+            $("#node-input-fields-container").editableList('addItems', this.fields);
+        },
+        oneditsave: function(msg) {
+            console.log("oneditsave start" );
+            var fields = $("#node-input-fields-container").editableList('items');
+            var node = this;
+            node.fields = [];
+            fields.each(function (i) {
+                var colum = $(this);
+                var c = {};
+                c.field = colum.find(".node-input-fields-field").val();
+                c.title = colum.find(".node-input-fields-title").val().replace(/'/g, "&#39;");
+                c.width = colum.find(".node-input-fields-width").val();
+                c.align = colum.find(".node-input-fields-align").val();
+                c.formatter = colum.find(".node-input-fields-formatter").val();
+                c.formatterParams = { target:"_blank" };
+                node.fields.push(c);
+            });
+            var that = this;
+            if ($("#node-input-cts").is(":checked")) { that.outputs = 1; }
+            else that.outputs = 0;
+/*            msg.payload = { 
+                1: $("#popup-input-1").val(), 
+                2: $("#popup-input-2").val(), 
+                3: $("#popup-input-3").val(), 
+                4: $("#popup-input-4").val()
+            } */
+		    console.log("oneditsave " + msg.payload);
+		    this.outputs = 1;
+        },
+        oneditresize: function(size) {
+            var rows = $("#dialog-form>div:not(.node-input-fields-container-row)");
+            var height = size.height;
+            for (var i=0; i<rows.length; i++) {
+                height -= $(rows[i]).outerHeight(true);
+            }
+            var editorRow = $("#dialog-form>div.node-input-fields-container-row");
+            height -= (parseInt(editorRow.css("marginTop"))+parseInt(editorRow.css("marginBottom")));
+
+            $("#node-input-fields-container").editableList('height',height);
+        }
+    });
+</script>
+
+<script type="text/html" data-template-name="ui_multiInputDialog">
+    <div class="form-row">
+        <label for="node-input-position"><i class="fa fa-th-large"></i> Layout</label>
+        <select type="text" id="node-input-position" style="display:inline-block; width:70%; vertical-align:baseline;">
+            <option value="prompt">OK / Cancel Dialog with multi Input</option>
+        </select>
+    </div>
+    <div class="form-row" id="node-dialog-displayok">
+        <label for="node-input-ok"><i class="fa fa-check"></i> Default action label</label>
+        <input type="text" id="node-input-ok" placeholder="label for OK button">
+    </div>
+    <div class="form-row" id="node-dialog-displaycancel">
+        <label for="node-input-cancel"><i class="fa fa-times"></i> Secondary action label</label>
+        <input type="text" id="node-input-cancel" placeholder="(optional label for Cancel button)">
+    </div>
+    <div class="form-row" id="node-toast-raw">
+        <label style="width:auto" for="node-input-raw"><i class="fa fa-exclamation-triangle"></i> Accept raw HTML/JavaScript input in msg.payload to format popup.</label>
+        <input type="checkbox" id="node-input-raw" style="display:inline-block; width:auto; vertical-align:baseline;">
+    </div>
+    <div class="form-row" id="node-dialog-className">
+        <label for="node-input-className"><i class="fa fa-code"></i> Class</label>
+        <input type="text" id="node-input-className" placeholder="[msg.className]">
+    </div>
+    <div class="form-row" id="node-dialog-topic">
+        <label for="node-input-topic"><i class="fa fa-tasks"></i> Topic</label>
+        <input type="text" id="node-input-topic" placeholder="[msg.topic]">
+    </div>
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+    <div class="form-row node-input-fields-container-row">
+        <label for="node-input-width" style="vertical-align:top"><i class="fa fa-list-alt"></i> Fields</label>
+        <span style="float:right">
+            <span data-i18n='table.label.send'>&nbsp;</span><input type="checkbox" id="node-input-cts" style="display:inline-block; width:auto; vertical-align:top;">
+        </span>
+        <ol id="node-input-fields-container"></ol>
+    </div>
+    <div class="form-tips"><b>Note</b>: checking <i>Accept raw HTML/JavaScript</i> can allow injection of code.
+    Ensure the input comes from trusted sources.</span></div>
+</script>
