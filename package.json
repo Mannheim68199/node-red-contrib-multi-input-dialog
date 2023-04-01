@@ -1,0 +1,23 @@
+{
+	"name" : "node-red-contrib-multi-input-dialog",
+        "version" : "0.0.6",
+	"scripts" : {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"node-red" : {
+		"version": ">=1.0.0",
+		"nodes" : {
+			"ui_multiInputDialog": "nodes/multiInputDialog.js"
+		}
+	},
+	"dependencies": {
+		"node-red-dashboard": "^3.4.0"
+	},
+	"devDependencies": {
+		"font-awesome": "^4.7.0",
+		"jquery": "~3.6.4"
+	},
+	"engines": {
+		"node": ">=12"
+	}
+}
