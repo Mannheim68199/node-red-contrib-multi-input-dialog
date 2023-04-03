@@ -1,6 +1,6 @@
 module.exports = function(RED) {
-    const ui = require('../../node_modules/node-red-dashboard/ui')(RED);
-//    var ui = require('../../node-red-dashboard/ui')(RED);
+    const ui = require('../../../node_modules/node-red-dashboard/ui')(RED);
+//    const  ui = require('../../node-red-dashboard/ui')(RED);
 ////    var ui = RED.require('node-red-dashboard')(RED);
 
     function PopupNode(config) {
