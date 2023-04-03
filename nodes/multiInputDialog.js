@@ -1,5 +1,5 @@
 module.exports = function(RED) {
-    const ui = require('../../../node_modules/node-red-dashboard/ui')(RED);
+    const ui = require('../../node_modules/node-red-dashboard/ui')(RED);
 //    const  ui = require('../../node-red-dashboard/ui')(RED);
 ////    var ui = RED.require('node-red-dashboard')(RED);
 
@@ -29,7 +29,7 @@ module.exports = function(RED) {
                 console.log("NodeRED: beforeSend start: " + JSON.stringify(msg.payload));
                 m = { oInput: {} }
                 node.fields.forEach( oField => {
-                    m.oInput[oField.field] = oField.toString();
+                    m.oInput[oField.label] = oField.value;
                 })
                 m.topic = node.topic || m.topic;
                 return m;
