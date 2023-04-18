@@ -167,6 +167,7 @@
             
         },
         oneditsave: function() {
+            console.log("oneditsave");
             var options = $("#node-input-option-container").children();
             var node = this;
             node.options = [];
@@ -186,6 +187,7 @@
             });
         },
         oneditresize: function() {
+            console.log("oneditresize");
             var options = $("#node-input-option-container").children();
             var newWidth = ($("#node-input-option-container").width() - 175)/2;
             var node = this;
