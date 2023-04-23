@@ -1,0 +1,510 @@
+[
+    {
+        "id": "e3f182b0fb32ecf9",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "b6ba1c8db9a51d47",
+        "type": "tab",
+        "label": "Flow 2",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "d292694761f0a581",
+        "type": "ui_base",
+        "theme": {
+            "name": "theme-light",
+            "lightTheme": {
+                "default": "#0094CE",
+                "baseColor": "#0094CE",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
+                "edited": true,
+                "reset": false
+            },
+            "darkTheme": {
+                "default": "#097479",
+                "baseColor": "#097479",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
+                "edited": false
+            },
+            "customTheme": {
+                "name": "Untitled Theme 1",
+                "default": "#4B7930",
+                "baseColor": "#4B7930",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif"
+            },
+            "themeState": {
+                "base-color": {
+                    "default": "#0094CE",
+                    "value": "#0094CE",
+                    "edited": false
+                },
+                "page-titlebar-backgroundColor": {
+                    "value": "#0094CE",
+                    "edited": false
+                },
+                "page-backgroundColor": {
+                    "value": "#fafafa",
+                    "edited": false
+                },
+                "page-sidebar-backgroundColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "group-textColor": {
+                    "value": "#1bbfff",
+                    "edited": false
+                },
+                "group-borderColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "group-backgroundColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "widget-textColor": {
+                    "value": "#111111",
+                    "edited": false
+                },
+                "widget-backgroundColor": {
+                    "value": "#0094ce",
+                    "edited": false
+                },
+                "widget-borderColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "base-font": {
+                    "value": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif"
+                }
+            },
+            "angularTheme": {
+                "primary": "indigo",
+                "accents": "blue",
+                "warn": "red",
+                "background": "grey",
+                "palette": "light"
+            }
+        },
+        "site": {
+            "name": "Node-RED Dashboard",
+            "hideToolbar": "false",
+            "allowSwipe": "false",
+            "lockMenu": "false",
+            "allowTempTheme": "true",
+            "dateFormat": "DD.MM.YYYY",
+            "sizes": {
+                "sx": 48,
+                "sy": 48,
+                "gx": 6,
+                "gy": 6,
+                "cx": 6,
+                "cy": 6,
+                "px": 0,
+                "py": 0
+            }
+        }
+    },
+    {
+        "id": "0e111b67000389e5",
+        "type": "ui_tab",
+        "name": "Home",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "3d07f566e35f6db6",
+        "type": "ui_group",
+        "name": "Standard",
+        "tab": "0e111b67000389e5",
+        "order": 1,
+        "disp": true,
+        "width": "11",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "0aa99a1efef1eb19",
+        "type": "inject",
+        "z": "e3f182b0fb32ecf9",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 260,
+        "y": 240,
+        "wires": [
+            [
+                "b9e2372cf3f9f031"
+            ]
+        ]
+    },
+    {
+        "id": "b9e2372cf3f9f031",
+        "type": "function",
+        "z": "e3f182b0fb32ecf9",
+        "name": "init",
+        "func": "/*\nmsg.payload = `\n<form name=\"myForm\" id=\"input-popup\">\n    <div class=\"form-row\">\n        <label for=\"popup-input-1\"><i class=\"fa fa-tag\"></i> Kurs</label>\n        <input type=\"number\" id=\"popup-input-1\" placeholder=\"Kurs\">\n    </div>\n    <div class=\"form-row\">\n        <label for=\"popup-input-2\"><i class=\"fa fa-tag\"></i> Anzahl</label>\n        <input type=\"number\" id=\"popup-input-2\" placeholder=\"Anzahl\">\n    </div>\n    <div class=\"form-row\">\n        <label for=\"popup-input-3\"><i class=\"fa fa-tag\"></i> Kosten</label>\n        <input type=\"number\" id=\"popup-input-3\" placeholder=\"Kosten\">\n    </div>\n</form>`;\n*/\nmsg.value = \"22\";\nmsg.timeout = 10;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 450,
+        "y": 240,
+        "wires": [
+            [
+                "d38b9e7910e2d4af"
+            ]
+        ]
+    },
+    {
+        "id": "dc1a628bec50682b",
+        "type": "ui_multiInputDialog",
+        "z": "e3f182b0fb32ecf9",
+        "position": "prompt",
+        "displayTime": "3",
+        "highlight": "",
+        "sendall": true,
+        "outputs": 1,
+        "ok": "OK",
+        "submit": "submit",
+        "cancel": "cancel",
+        "raw": true,
+        "className": "",
+        "topic": "",
+        "name": "popup",
+        "payload": "",
+        "splitLayout": false,
+        "options": [
+            {
+                "label": "F1",
+                "value": "value_0",
+                "type": "text",
+                "required": true
+            },
+            {
+                "label": "F2",
+                "value": "value_1",
+                "type": "text",
+                "required": false
+            }
+        ],
+        "x": 450,
+        "y": 320,
+        "wires": [
+            [
+                "cea9025aa8a106ac"
+            ]
+        ]
+    },
+    {
+        "id": "73ca2feeca9fc32a",
+        "type": "inject",
+        "z": "e3f182b0fb32ecf9",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 260,
+        "y": 320,
+        "wires": [
+            [
+                "dc1a628bec50682b"
+            ]
+        ]
+    },
+    {
+        "id": "d38b9e7910e2d4af",
+        "type": "ui_form",
+        "z": "e3f182b0fb32ecf9",
+        "name": "hjk",
+        "label": "Test",
+        "group": "3d07f566e35f6db6",
+        "order": 5,
+        "width": 0,
+        "height": 0,
+        "options": [
+            {
+                "label": "F1",
+                "value": "F1",
+                "type": "number",
+                "required": true,
+                "rows": null
+            },
+            {
+                "label": "F2",
+                "value": "F2",
+                "type": "number",
+                "required": true,
+                "rows": null
+            },
+            {
+                "label": "F3",
+                "value": "F3",
+                "type": "number",
+                "required": true,
+                "rows": null
+            },
+            {
+                "label": "F4",
+                "value": "F4",
+                "type": "number",
+                "required": true,
+                "rows": null
+            }
+        ],
+        "formValue": {
+            "F1": "",
+            "F2": "",
+            "F3": "",
+            "F4": ""
+        },
+        "payload": "",
+        "submit": "submit",
+        "cancel": "cancel",
+        "topic": "topic",
+        "topicType": "msg",
+        "splitLayout": "",
+        "className": "",
+        "x": 710,
+        "y": 240,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "8cab2d2c657272e7",
+        "type": "ui_text",
+        "z": "e3f182b0fb32ecf9",
+        "group": "3d07f566e35f6db6",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Text",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "x": 710,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "30c7f3b5b0aafc88",
+        "type": "inject",
+        "z": "e3f182b0fb32ecf9",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 260,
+        "y": 400,
+        "wires": [
+            [
+                "8cab2d2c657272e7"
+            ]
+        ]
+    },
+    {
+        "id": "0616017b4f94c2bb",
+        "type": "ui_button",
+        "z": "e3f182b0fb32ecf9",
+        "name": "",
+        "group": "3d07f566e35f6db6",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "button",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 470,
+        "y": 440,
+        "wires": [
+            [
+                "8cab2d2c657272e7"
+            ]
+        ]
+    },
+    {
+        "id": "cea9025aa8a106ac",
+        "type": "debug",
+        "z": "e3f182b0fb32ecf9",
+        "name": "debug 2",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 720,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "1a041aa43da7dcd7",
+        "type": "inject",
+        "z": "b6ba1c8db9a51d47",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 400,
+        "y": 120,
+        "wires": [
+            [
+                "b08a3c47fc397309"
+            ]
+        ]
+    },
+    {
+        "id": "79d30305fa487036",
+        "type": "debug",
+        "z": "b6ba1c8db9a51d47",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 960,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "b08a3c47fc397309",
+        "type": "ui_button",
+        "z": "b6ba1c8db9a51d47",
+        "name": "",
+        "group": "3d07f566e35f6db6",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "label": "button",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "1",
+        "payloadType": "str",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 590,
+        "y": 120,
+        "wires": [
+            [
+                "519944e933fc879f"
+            ]
+        ]
+    },
+    {
+        "id": "519944e933fc879f",
+        "type": "function",
+        "z": "b6ba1c8db9a51d47",
+        "name": "function 1",
+        "func": "if ( msg.i === undefined ) {\n    msg.i = 1; \n} else {\n    msg.i += 1;\n}\nmsg.payload = msg.i;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "// Der Code hier wird ausgeführt,\n// wenn der Node gestartet wird\nlet i = 0;",
+        "finalize": "",
+        "libs": [],
+        "x": 760,
+        "y": 120,
+        "wires": [
+            [
+                "79d30305fa487036",
+                "cdf09515d89cf787"
+            ]
+        ]
+    },
+    {
+        "id": "cdf09515d89cf787",
+        "type": "ui_text",
+        "z": "b6ba1c8db9a51d47",
+        "group": "3d07f566e35f6db6",
+        "order": 4,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "text",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "x": 950,
+        "y": 120,
+        "wires": []
+    }
+]
