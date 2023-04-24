@@ -58,7 +58,6 @@ module.exports = function(RED) {
                     height: fHeight,
                     width: fWidth,
                     rowCount: ((config.splitLayout == true) ? Math.ceil(config.options.length/2) : config.options.length) + (config.topic == '') ? 1 : 2,
-                    title: config.title || config.topic,
                     label: config.topic,
                     splitLayout: config.splitLayout || false,
                     dialogHeight: fHeight + 150,
