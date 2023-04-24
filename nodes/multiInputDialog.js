@@ -16,21 +16,12 @@ module.exports = function(RED) {
             RED.nodes.createNode(this, config);
 
             var done = null;
-
-            if (config.hasOwnProperty("displayTime") && (config.displayTime.length > 0)) {
-                try { this.displayTime = parseFloat(config.displayTime) * 1000; }
-                catch(e) { this.displayTime = 3000; }
-            }
-            this.position = "dialog";
-            this.ok = config.submit;
-            this.cancel = config.cancel;
-            this.className = config.className;
-            this.topic = config.topic;
-            this.fields = config.options;
-            this.sendall = true;
-            this.raw = config.raw || true;
-            this.parameters = config.parameters || {};
             var node = this;
+            let sy = ui.getSizes().sy || 48;
+            let cy = ui.getSizes().cy || 6;
+            let fRowHeight = sy;
+            let fHeight = fRowHeight * ((config.splitLayout == true) ? Math.ceil(config.options.length/2) : config.options.length);
+            let fWidth = (config.splitLayout == true) ? 450 : 250;
 
             done = ui.add({
                 node: node,
@@ -49,23 +40,35 @@ module.exports = function(RED) {
             node.on('input', function(msg, send, done) {
                 console.log("NodeRED: onInput: " + JSON.stringify(msg.payload) );
                 if (node.sendall === true) { delete msg.socketid; }
-                var dt = node.displayTime || msg.timeout * 1000 || 3000;
-                if (dt <= 0) { dt = 1; }
                 ui.emitSocket('show-dialog', {
-                    title: node.topic || msg.topic,
-                    toastClass: node.className || msg.className,
+                    title: config.name || msg.topic,
+                    dialogClass: config.className,
                     message: msg.payload,
                     highlight: node.highlight || msg.highlight,
-                    displayTime: dt,
                     position: node.position,
                     id: node.id,
-                    ok: node.ok,
-                    cancel: node.cancel,
-                    socketid: msg.socketid,
+                    ok: config.submit,
+                    cancel: config.cancel,
+                    socketid: config.socketid,
                     msg: msg,
-                    fields: node.fields,
-                    parameters: this.parameters,
-                    raw: node.raw,
+                    fields: config.options,
+                    sy: sy,
+                    cy: cy,
+                    rowHeight: fRowHeight,
+                    height: fHeight,
+                    width: fWidth,
+                    rowCount: ((config.splitLayout == true) ? Math.ceil(config.options.length/2) : config.options.length) + (config.topic == '') ? 1 : 2,
+                    title: config.title || config.topic,
+                    label: config.topic,
+                    splitLayout: config.splitLayout || false,
+                    dialogHeight: fHeight + 150,
+                    dialogWidth: fWidth,
+                    dialogContentHeight: fHeight + 100,
+                    dialogContentWidth: fWidth - 50,
+                    width: fWidth,
+                    height: fHeight,
+                    ariaLabel: config.ok + " or " + config.cancel,
+                    formClass: config.splitLayout ? "formElementSplit" : "formElement"
                 });
             });
         }
