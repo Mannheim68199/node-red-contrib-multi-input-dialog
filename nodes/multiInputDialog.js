@@ -1,16 +1,11 @@
 module.exports = function(RED) {
-//    const ui = require('../../node_modules/node-red-dashboard/ui')(RED);
-//    const  ui = require('../../node-red-dashboard/ui')(RED);
-////    var ui = RED.require('node-red-dashboard')(RED);
-
     var ui = null;
 
     function PopupNode(config) {
         try {
             console.log("NodeRED: PopupNode start");
             if (!ui) {
-                ui = require('/home/node-red/.node-red/node-red-dashboard/ui')(RED);
-//                ui = require("./ui")(RED);
+                ui = RED.require('node-red-dashboard/ui')(RED);
             }
 
             RED.nodes.createNode(this, config);
@@ -67,7 +62,7 @@ module.exports = function(RED) {
                     width: fWidth,
                     height: fHeight,
                     ariaLabel: config.ok + " or " + config.cancel,
-                    formClass: config.splitLayout ? "formElementSplit" : "formElement"
+                    formClass: config.splitLayout ? "formElement formElementSplit" : "formElement"
                 });
             });
         }
