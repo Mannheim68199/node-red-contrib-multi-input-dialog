@@ -74,5 +74,5 @@ module.exports = function(RED) {
             }
         });
     }
-    RED.nodes.registerType("ui_multiInputDialog", PopupNode);
+    RED.nodes.registerType("ui_dialog", PopupNode);
 };

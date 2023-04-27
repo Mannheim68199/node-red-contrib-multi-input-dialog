@@ -1,15 +1,16 @@
 {
 	"name": "node-red-contrib-multi-input-dialog",
-	"version": "0.0.8",
+	"version": "0.0.10",
 	"scripts": {
 		"inspect": "node --inspect=192.168.33.47:9229 /usr/lib/node_modules/node-red/red.js --userDir /home/node-red/node-red-dashboard  -s ../settings.js",
 		"start": "node /usr/lib/node_modules/node-red/red.js -v -u /home/node-red/.node-red -s ../settings.js",
 		"debug": "node --nolazy  /home/node-red/.node-red/node-red/packages/node_modules/node-red/red.js -v --userDir /home/node-red/node_modules/node-red-dashboard  -s ../settings.js"
 	},
+    "main": "ui_dialog.js",
 	"node-red": {
 		"version": ">=1.0.0",
 		"nodes": {
-			"ui_multiInputDialog": "nodes/multiInputDialog.js"
+			"ui_dialog": "ui_dialog.js"
 		}
 	},
 	"dependencies": {

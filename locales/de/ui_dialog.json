@@ -1,0 +1,31 @@
+{
+    "ui_dialog": {
+      "label": {
+        "group": "Gruppe",
+        "size": "Größe",
+        "name": "Feldname",
+        "Label": "Überschrift",
+        "formElements": " Felder",
+        "type": "Typ",
+        "required": "Muß",
+        "remove": "Lösche",
+        "egName": "z.B. Feld-1",
+        "egName2": "z.B. Name",
+        "text": "Text",
+        "number": "Zahl",
+        "email": "E-Mail",
+        "password": "Kennwort",
+        "checkbox": "Auswahlkästchen",
+        "switch": "Schalter",
+        "date": "Datum",
+        "time": "Zeit",
+        "element": " Feld",
+        "buttons": "Schaltflächen",
+        "topic": " Topic",
+        "optionalMsgTopic": "Optionaler msg.topic",
+        "splitLayout": " Platzieren der Felder in 2 Spalten",
+        "className": " Klasse",
+        "classNamePlaceholder": "Optionale(r) CSS-Klassenname(n) für das Widget"
+      }
+    }
+  }
