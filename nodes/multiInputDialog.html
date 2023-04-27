@@ -4,7 +4,6 @@
         category: RED._("node-red-dashboard/ui_base:ui_base.label.category"),
         color: 'rgb(119, 198, 204)',
         defaults: {
-            position: {value: 'prompt'},
             displayTime: {value: '3'},
             highlight: {value: ''},
             sendall: {value: true},
@@ -74,9 +73,6 @@
             });
 
             this.resizeRule = function(option,newWidth) {
-                //option.find(".node-input-option-type").width(newWidth);
-                //  option.find(".node-input-option-label").width(newWidth);
-                //  option.find(".node-input-option-value").width(newWidth);
             }
 
             function generateOption(i, option) {
@@ -88,30 +84,17 @@
                 $('<i style="cursor:move; margin-left:3px;" class="node-input-option-handle fa fa-bars"></i>').appendTo(row);
 
                 var labelField = $('<input/>',{class:"node-input-option-label", type:"text", style:"margin-left:7px; width:35%;", placeholder: RED._("node-red-dashboard/ui_form:ui_form.label.egName"), value:option.label}).appendTo(row);//.typedInput({default:'str',types:['str', 'num']});
-/*                var valueClass ="node-input-option-value"
-                if (!option.value) { valueClass ="node-input-option-value input-error"; }
-                var valueField = $('<input/>',{class:valueClass, type:"text", style:"margin-left:7px; width:20%;", placeholder: RED._("node-red-dashboard/ui_form:ui_form.label.egName2"), value:"value_"+i}).appendTo(row);//.typedInput({default:'str',types:['str','num','bool']});
-                valueField.keyup(function() {
-                    if ($(this).val() && $(this).hasClass('input-error')) {
-                        $(this).removeClass('input-error')
-                    }
-                    else {
-                        if (!$(this).val()) {
-                            $(this).addClass('input-error')
-                        }
-                    }
-
-                });
-*/                
                 var typeField = $('<select/>',{class:"node-input-option-type",type:"text",style:"margin-left:7px; width:25%"}).appendTo(row);//.typedInput({default:'str',types:['str', 'num']});
 
                 var arr = [
                   {val : "text", text: RED._("node-red-dashboard/ui_form:ui_form.label.text")},
                   {val : "number", text: RED._("node-red-dashboard/ui_form:ui_form.label.number")},
                   {val : "checkbox", text: RED._("node-red-dashboard/ui_form:ui_form.label.checkbox")},
-                  {val : "switch", text: RED._("node-red-dashboard/ui_form:ui_form.label.switch")},
+                  //{val : "switch", text: RED._("node-red-dashboard/ui_form:ui_form.label.switch")},
                   {val : "date", text: RED._("node-red-dashboard/ui_form:ui_form.label.date")},
-                  {val : "time", text: RED._("node-red-dashboard/ui_form:ui_form.label.time")}
+                  {val : "time", text: RED._("node-red-dashboard/ui_form:ui_form.label.time")},
+                  {val : "email", text: RED._("node-red-dashboard/ui_form:ui_form.label.email")},
+                  {val : "password", text: RED._("node-red-dashboard/ui_form:ui_form.label.password")}
                 ];
 
                 $(arr).each(function() {
@@ -127,25 +110,11 @@
                 var reqRow=$("<label />",{class:"switch",style:"top:10px; width:30px;"}).appendTo(requiredInnerContainer);
                 var required = $('<input/>',{class:"node-input-option-required", type:"checkbox", checked:option.required, style:"vertical-align:top;"}).appendTo(reqRow);//labelForRequried);//.typedInput({default:'str',types:['str', 'num']});
                 var reqDiv=$("<div />",{class:"slider round"}).appendTo(reqRow);
-//                var vis = option.rows ? 'visible' : 'hidden';
-//                var rowsField = $('<input/>',{class:"node-input-option-rows", type:"number", style:"width:10%;", placeholder:'Rows', value:option.rows }).css('visibility',vis).appendTo(row);
 
                 var finalspan = $('<div/>',{style:"display:inline-block; width:15%;"}).appendTo(row);
                 var deleteButton = $('<a/>',{href:"#",class:"editor-button", style:"font-size:1.3em; left:45%; position:relative;"}).appendTo(finalspan);
                 $('<i/>',{class:"fa fa-trash-o"}).appendTo(deleteButton);
-/*
-                typeField.change(function(e){
-                    if (e.target.value != 'multiline') {
-                        rowsField.val(undefined)
-                        option.rows = null;
-                        rowsField.css('visibility','hidden')
-                    } else {
-                        rowsField.css('visibility','visible')
-                        if (!rowsField[0].value) rowsField[0].value = 3;
-                    }
 
-                })
-*/
                 deleteButton.click(function() {
                     container.find(".node-input-option-value").removeAttr('required')
                     container.css({"background":"var(--red-ui-secondary-background-inactive, #fee)"});
@@ -185,7 +154,6 @@
             var options = $("#node-input-option-container").children();
             var node = this;
             node.options = [];
-//            node.formValue = {};
             options.each(function(i) {
                 var option = $(this);
                 var o = {
@@ -193,10 +161,7 @@
                     value: "value_" + i,
                     type: option.find(".node-input-option-type").val(),
                     required: option.find(".node-input-option-required").is(':checked')
-//                    rows: parseInt(option.find(".node-input-option-rows").val())
                 };
-                // o.value= o.value||o.label||(o.type+"_"+i);
-//                node.formValue[o.value]= o.type == "checkbox" || o.type == "switch" ? false : "";
                 node.options.push(o);
             });
         },

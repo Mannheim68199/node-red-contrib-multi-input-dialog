@@ -3,7 +3,6 @@ module.exports = function(RED) {
 
     function PopupNode(config) {
         try {
-            console.log("NodeRED: PopupNode start");
             if (!ui) {
                 ui = RED.require('node-red-dashboard/ui')(RED);
             }
@@ -24,7 +23,6 @@ module.exports = function(RED) {
                 storeFrontEndInputAsState: false,
                 forwardInputMessages: false,
                 beforeSend: function (msg) {
-                    console.log("NodeRED: beforeSend start: " + JSON.stringify(msg.payload));
                     let m = {};
                     m.payload = msg.payload.payload;
                     m.topic = node.topic;
@@ -33,8 +31,8 @@ module.exports = function(RED) {
             });
 
             node.on('input', function(msg, send, done) {
-                console.log("NodeRED: onInput: " + JSON.stringify(msg.payload) );
                 if (node.sendall === true) { delete msg.socketid; }
+                config.options.forEach( oField => {oField.value = "";});
                 ui.emitSocket('show-dialog', {
                     title: config.name || msg.topic,
                     dialogClass: config.className,
@@ -62,83 +60,7 @@ module.exports = function(RED) {
                     width: fWidth,
                     height: fHeight,
                     ariaLabel: config.ok + " or " + config.cancel,
-                    formClass: config.splitLayout ? "formElement formElementSplit" : "formElement",
-                    fnConfirm: `function(res) {
-                        this.dialog.msg.payload = this.dialog.ok;
-                        let oResult = {};
-                        let bError = false;
-                        this.dialog.fields.forEach( oField => {
-                            if ( oField.required && !oField.value && oField.typ2 !== 'switch' ) {
-                                bError = true;
-                                console.log("Value missing for field: " + oField.label );
-                            } else {
-                                switch (oField.type) {
-                                    case "time":
-                                        let dDateTime = new Date(oField.value);
-                                        oResult[oField.label] = dDateTime.toLocaleString().substring(10,15);
-                                        break;
-                                    case "date":
-                                        let dDate = new Date(oField.value);
-                                        dDate.setHours(dDate.getHours()+12);
-                                        oResult[oField.label] = dDate.toISOString().substring(0,10) || "";
-                                        break;
-                                    default:
-                                        oResult[oField.label] = oField.value;
-                                }
-                            }
-                        });
-                        if (!bError) {
-                            this.dialog.msg.payload = oResult;
-                            if (oResult === {}) { this.dialog.msg.payload = ""; }
-                            this.events.emit({ id: this.dialog.msg.id, value: this.dialog.msg });
-                        }
-                    }`,
-                    fnSubmit: `function (msg) {
-                        this.dialog.msg.payload = this.dialog.ok;
-                        let oResult = {};
-                        let bError = false;
-                        this.dialog.fields.forEach( oField => {
-                            if ( oField.required && !oField.value && oField.typ2 !== 'switch' ) {
-                                bError = true;
-                                console.log("Value missing for field: " + oField.label );
-                            } else {
-                                switch (oField.type) {
-                                    case "time":
-                                        let dDateTime = new Date(oField.value);
-                                        oResult[oField.label] = dDateTime.toLocaleString().substring(10,15);
-                                        break;
-                                    case "date":
-                                        let dDate = new Date(oField.value);
-                                        dDate.setHours(dDate.getHours()+12);
-                                        oResult[oField.label] = dDate.toISOString().substring(0,10) || "";
-                                        break;
-                                    default:
-                                        oResult[oField.label] = oField.value;
-                                }
-                            }
-                        });
-                        if (!bError) {
-                            this.$mdDialog.hide();
-                        }
-                    }`,
-                    fnStop: `function(event) {
-                        if ((event.charCode === 13) || (event.which === 13)) {
-                            event.preventDefault();
-                            event.stopPropagation();
-                        }
-                    }`,
-                    fnReset: `function () {
-                        for (var x in dialog.fields) {
-                            if (dialog.fields[x].type === "checkbox" || dialog.fields[x].type === "switch") {
-                                dialog.fields[x].value = false;
-                            }
-                            else {
-                                dialog.fields[x].value = "";
-                            }
-                        }
-                        $scope.$$childTail.form.$setUntouched();
-                        $scope.$$childTail.form.$setPristine();
-                    }`
+                    formClass: config.splitLayout ? "formElement formElementSplit" : "formElement"
                 });
             });
         }
