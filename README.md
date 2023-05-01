@@ -15,18 +15,9 @@ The  `Dialog Setup`  and the resulting   `Dialog Popup`   looks like:
 
 
 
-|             <img src="./src/DialogSetup.png" width="250">        |          <img src="./src/DialogPopup.png" width="250">           |
+|             <img src="./DialogSetup.png" width="250">        |          <img src="./DialogPopup.png" width="250">           |
 |------------|-------------| 
 
-
-## Changes
-
-* src/main.js
-* Dialog.md
-* dist/js/app.min.js
-* src/DialogSetup.png
-* src/DialogPopup.png
-* partials/dialog.html (not used currently)
 
 ## Setup
 
